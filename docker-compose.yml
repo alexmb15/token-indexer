@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+
+  token-indexer:
+    # ────────────── BUILD ──────────────
+    build:
+      context: .
+      network: host        # <─ BuildKit stage uses host DNS
+    # ────────────── RUN ────────────────
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - redis
+    dns:                    # public resolvers for container
+      - 8.8.8.8
+      - 1.1.1.1
+    restart: unless-stopped
