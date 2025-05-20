@@ -52,16 +52,20 @@ Data flow ⬇️
 ```js
 // src/models/token.model.ts
 {
-  _id: ObjectId,
-  chainId: Number,        // 1, 56, 137 …
-  address: String,        // checksum 0x…
-  symbol: String,
-  name: String,
-  decimals: Number,
-  logoURI: String?,       // optional
-  source: [String],       // e.g. ['coingecko','trustwallet']
-  updatedAt: Date
-}
+    chainId:   { type: Number,  required: true },            // 1 = ETH, 56 = BSC …
+    address:   { type: String,  required: true, lowercase: true },
+    symbol:    { type: String,  required: true },
+    name:      { type: String,  required: true },
+    decimals:  { type: Number,  required: true },
+
+    logoURI:   { type: String },       // optional image URL (TrustWallet / tokenlists)
+    tags:      [String],               // “stablecoin”, “defi”, …
+    verified:  { type: Boolean, default: false }, // on-chain or manual verification flag
+
+    totalSupply: { type: String },     // stored as string to keep full 256-bit value
+    holders:     { type: Number }      // optional on-chain holder count
+  },
+  { timestamps: true }                 // adds createdAt / updatedAt
 
 ```
 ---
