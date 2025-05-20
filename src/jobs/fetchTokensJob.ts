@@ -52,12 +52,13 @@ export const fetchTokensJob = async (chainId: number) => {
   const snapshotKey = `snapshot_hash:${chainId}`;
   const oldHash = await redis.get(snapshotKey);
 
- // if (oldHash === hash) return; // No token changes detected
+  if (oldHash === hash) return; // No token changes detected
+/*
   if (oldHash === hash) {
     logger.info({ chainId }, 'No token changes detected');
     return;
   }
-
+*/
   const oldTokensArr = JSON.parse(
     (await redis.get(`snapshot:${chainId}`)) || '[]'
   );
