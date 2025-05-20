@@ -6,7 +6,6 @@ dist/
 *.log
 *.env
 docker-compose.override.yml
-yarn.lock
 
 # OS / IDE
 .DS_Store
