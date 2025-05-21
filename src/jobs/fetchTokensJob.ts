@@ -74,7 +74,21 @@ export const fetchTokensJob = async (chainId: number) => {
    * ------------------------------------------------------------------ */
   const provider = providerForChain(chainId);
   for (const t of diff) {
-    // здесь можно добавить on-chain verify totalSupply / decimals
+  // here you can add on-chain verify totalSupply / decimals
+  /*
+  try {
+    const contract = new Contract(getAddress(t.address), ERC20, provider);
+    const [rawSupply, rawDecimals] = await Promise.all([
+      contract.totalSupply(),
+      contract.decimals()
+    ]);
+
+    t.totalSupply = rawSupply.toString();
+    t.decimals    = rawDecimals;          // override if different
+  } catch (e) {
+    logger.warn({ address: t.address, err: e }, 'On-chain read failed');
+  }
+  * */
     await upsertToken(t);
   }
 
