@@ -1,6 +1,8 @@
 import Redis from 'ioredis';
 
-const redisUrl = process.env.REDIS_URL ?? 'redis://redis:6379';
-export const redis = new Redis(redisUrl, {
-  maxRetriesPerRequest: null
+export const redis = new Redis({
+  host: process.env.REDIS_HOST ?? 'redis',
+  port: +(process.env.REDIS_PORT ?? 6379),
+  password: process.env.REDIS_PASSWORD,
+  maxRetriesPerRequest: null,
 });
